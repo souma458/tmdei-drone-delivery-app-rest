@@ -10,4 +10,12 @@ start: teardown
 teardown:
 	@docker-compose down
 	@-docker rmi \
+	tmdei-drone-delivery-app-rest_scheduler \
+	tmdei-drone-delivery-app-rest_user-management \
+	tmdei-drone-delivery-app-rest_drone-management \
+	tmdei-drone-delivery-app-rest_third-party-transportation \
+	tmdei-drone-delivery-app-rest_-delivery-management \
+	tmdei-drone-delivery-app-rest_package-management \
+	tmdei-drone-delivery-app-rest_mysqldb \
+	tmdei-drone-delivery-app-rest_mongodb
 	 
