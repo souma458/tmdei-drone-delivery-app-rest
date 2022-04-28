@@ -1,4 +1,4 @@
-package pt.isep.ipp.tmdei.usermanagement;
+package pt.isep.tmdei.usermanagement;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
