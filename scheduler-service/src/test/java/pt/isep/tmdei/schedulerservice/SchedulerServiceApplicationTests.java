@@ -1,10 +1,10 @@
-package pt.isep.ipp.tmdei.dronemanagement;
+package pt.isep.tmdei.schedulerservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class DroneManagementApplicationTests {
+class SchedulerServiceApplicationTests {
 
 	@Test
 	void contextLoads() {
