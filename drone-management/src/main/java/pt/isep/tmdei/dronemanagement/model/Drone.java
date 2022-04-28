@@ -1,11 +1,12 @@
-package pt.isep.tmdei.usermanagement.model;
+package pt.isep.tmdei.dronemanagement.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 import lombok.AccessLevel;
 import lombok.Data;
@@ -14,21 +15,20 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "account")
-public class UserAccount {
+public class Drone {
 
     @Id
-    @Column(name = "username")
-    private String username;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Column(name = "password", nullable = false)
-    private String password;
+    @Column(name = "model", nullable = false)
+    private String model;
 
-    @Column(name = "personal_info_id", nullable = false)
-    private Long personal_info;
+    @Column(name = "color", nullable = false)
+    private String color;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
-    private AccountStatus status;
+    private DroneStatus status;
 
 }
