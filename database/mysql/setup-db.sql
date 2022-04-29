@@ -88,13 +88,13 @@ INSERT INTO model (id, weight, height, width) VALUES("DJI Mavic 2 Pro", 2200, 40
 INSERT INTO model (id, weight, height, width) VALUES("Parrot Anafi", 1200, 25, 30);
 INSERT INTO model (id, weight, height, width) VALUES("3DR Solo", 1700, 35, 45);
 
-INSERT INTO drone (model, color, status) VALUES("DJI Air 2S", "WHITE", "ACTIVE");
-INSERT INTO drone (model, color, status) VALUES("DJI Air 2S", "BLUE", "ACTIVE");
-INSERT INTO drone (model, color, status) VALUES("DJI Mini 2", "GREEN", "ACTIVE");
-INSERT INTO drone (model, color, status) VALUES("DJI Mini 2", "RED", "ACTIVE");
-INSERT INTO drone (model, color, status) VALUES("DJI Mavic 2 Pro", "ORANGE", "ACTIVE");
-INSERT INTO drone (model, color, status) VALUES("DJI Mavic 2 Pro", "YELLOW", "ACTIVE");
-INSERT INTO drone (model, color, status) VALUES("Parrot Anafi", "PURPLE", "ACTIVE");
-INSERT INTO drone (model, color, status) VALUES("Parrot Anafi", "BLACK", "ACTIVE");
-INSERT INTO drone (model, color, status) VALUES("3DR Solo", "GREY", "ACTIVE");
-INSERT INTO drone (model, color, status) VALUES("3DR Solo", "GREY", "ACTIVE");
+INSERT INTO drone (model, color, status) VALUES("DJI Air 2S", "WHITE", "IDLE");
+INSERT INTO drone (model, color, status) VALUES("DJI Air 2S", "BLUE", "IDLE");
+INSERT INTO drone (model, color, status) VALUES("DJI Mini 2", "GREEN", "IDLE");
+INSERT INTO drone (model, color, status) VALUES("DJI Mini 2", "RED", "IDLE");
+INSERT INTO drone (model, color, status) VALUES("DJI Mavic 2 Pro", "ORANGE", "IDLE");
+INSERT INTO drone (model, color, status) VALUES("DJI Mavic 2 Pro", "YELLOW", "IDLE");
+INSERT INTO drone (model, color, status) VALUES("Parrot Anafi", "PURPLE", "IDLE");
+INSERT INTO drone (model, color, status) VALUES("Parrot Anafi", "BLACK", "IDLE");
+INSERT INTO drone (model, color, status) VALUES("3DR Solo", "GREY", "IDLE");
+INSERT INTO drone (model, color, status) VALUES("3DR Solo", "GREY", "IDLE");
