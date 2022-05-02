@@ -1,1 +1,12 @@
-
+server:
+  servlet:
+    context-path: /scheduler
+user-service:
+  url: http://localhost:8082
+  prefix: /um
+delivery-service:
+  url: http://localhost:8082
+  prefix: /dm
+package-service:
+  url: http://localhost:8082
+  prefix: /pm

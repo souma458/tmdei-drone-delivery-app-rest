@@ -9,6 +9,14 @@ services:
     ports:
       - "8081:8080"
     restart: always
+    environment:
+      SERVER_SERVLET_CONTEXT-PATH: $SCHEDULER_API_PREFIX
+      USER-SERVICE_URL: $USER_SERVICE_URL
+      USER-SERVICE_PREFIX: $USER_SERVICE_PREFIX
+      DELIVERY-SERVICE_URL: $DELIVERY_SERVICE_URL
+      DELIVERY-SERVICE_PREFIX: $DELIVERY_SERVICE_PREFIX
+      PACKAGE-SERVICE_URL: $PACKAGE_SERVICE_URL
+      PACKAGE-SERVICE_PREFIX: $PACKAGE_SERVICE_PREFIX
     networks:
       - backend
 
@@ -18,7 +26,7 @@ services:
       context: user-management
       dockerfile: Dockerfile
     ports:
-      - "8082:8080"
+      - "${USER_SERVICE_PORT}:8080"
     restart: always
     depends_on:
       - mongodb
