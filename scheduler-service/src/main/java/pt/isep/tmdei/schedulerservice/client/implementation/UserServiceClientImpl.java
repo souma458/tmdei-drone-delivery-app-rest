@@ -1,10 +1,12 @@
 package pt.isep.tmdei.schedulerservice.client.implementation;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import pt.isep.tmdei.schedulerservice.client.UserServiceClient;
 import pt.isep.tmdei.schedulerservice.model.response.GetAccountResponseDTO;
+import pt.isep.tmdei.schedulerservice.service.exception.InvalidAccountException;
 
 public class UserServiceClientImpl extends ServiceClient implements UserServiceClient {
 
@@ -17,7 +19,11 @@ public class UserServiceClientImpl extends ServiceClient implements UserServiceC
 
     @Override
     public ResponseEntity<GetAccountResponseDTO> getAccount(String username) {
-        return restTemplate.getForEntity(this.basePath(), GetAccountResponseDTO.class);
+        try {
+            return restTemplate.getForEntity(this.basePath() + "/account/" + username, GetAccountResponseDTO.class);
+        } catch (HttpClientErrorException.NotFound exception) {
+            throw new InvalidAccountException(exception.getMessage());
+        }
     }
 
 }

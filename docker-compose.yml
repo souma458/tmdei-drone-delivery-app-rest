@@ -7,10 +7,10 @@ services:
       context: scheduler-service
       dockerfile: Dockerfile
     ports:
-      - "8081:8080"
+      - "${SCHEDULER_SERVICE_PORT}:${INTERNAL_PORT}"
     restart: always
     environment:
-      SERVER_SERVLET_CONTEXT-PATH: $SCHEDULER_API_PREFIX
+      SERVER_SERVLET_CONTEXT-PATH: $SCHEDULER_SERVICE_PREFIX
       USER-SERVICE_URL: $USER_SERVICE_URL
       USER-SERVICE_PREFIX: $USER_SERVICE_PREFIX
       DELIVERY-SERVICE_URL: $DELIVERY_SERVICE_URL
@@ -26,11 +26,12 @@ services:
       context: user-management
       dockerfile: Dockerfile
     ports:
-      - "${USER_SERVICE_PORT}:8080"
+      - "${USER_SERVICE_PORT}:${INTERNAL_PORT}"
     restart: always
     depends_on:
       - mongodb
     environment:
+      SERVER_SERVLET_CONTEXT-PATH: $USER_SERVICE_PREFIX
       SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/user_db
       SPRING_DATASOURCE_USERNAME: $USER_ACCOUNT_DB_USERNAME
       SPRING_DATASOURCE_PASSWORD: $USER_ACCOUNT_DB_PASSWORD

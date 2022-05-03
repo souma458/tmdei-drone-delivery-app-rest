@@ -5,8 +5,8 @@ user-service:
   url: http://localhost:8082
   prefix: /um
 delivery-service:
-  url: http://localhost:8082
+  url: http://localhost:8086
   prefix: /dm
 package-service:
-  url: http://localhost:8082
+  url: http://localhost:8085
   prefix: /pm
