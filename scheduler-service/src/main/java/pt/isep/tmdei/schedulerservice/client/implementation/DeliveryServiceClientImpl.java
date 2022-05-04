@@ -5,6 +5,7 @@ import org.springframework.web.client.RestTemplate;
 
 import pt.isep.tmdei.schedulerservice.client.DeliveryServiceClient;
 import pt.isep.tmdei.schedulerservice.model.data.CoordinatesDTO;
+import pt.isep.tmdei.schedulerservice.model.request.CreateDeliveryRequestDTO;
 import pt.isep.tmdei.schedulerservice.model.response.CreateDeliveryResponseDTO;
 
 public class DeliveryServiceClientImpl extends ServiceClient implements DeliveryServiceClient {
@@ -19,8 +20,11 @@ public class DeliveryServiceClientImpl extends ServiceClient implements Delivery
     @Override
     public ResponseEntity<CreateDeliveryResponseDTO> createDelivery(String username, CoordinatesDTO pickupCoordinates,
             CoordinatesDTO dropOffCoordinates) {
-        // TODO Auto-generated method stub
-        return null;
+        var request = new CreateDeliveryRequestDTO();
+        request.setUsername(username);
+        request.setPickupCoordinates(pickupCoordinates);
+        request.setDropOffCoordinates(dropOffCoordinates);
+        return restTemplate.postForEntity(this.basePath() + "/delivery", request, CreateDeliveryResponseDTO.class);
     }
 
 }

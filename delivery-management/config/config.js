@@ -7,7 +7,7 @@ export default {
   /**
    * Your favorite port
    */
-  port: parseInt(process.env.PORT, 10) || 8084,
+  port: parseInt(process.env.PORT, 10) || 8080,
 
   /**
    * That long string from mlab
@@ -18,6 +18,6 @@ export default {
    * API configs
    */
   api: {
-    prefix: "/dm",
+    prefix: process.env.DELIVERY_SERVICE_PREFIX || "/dm",
   },
 };

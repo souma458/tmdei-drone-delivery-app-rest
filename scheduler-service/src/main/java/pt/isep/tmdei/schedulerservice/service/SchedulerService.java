@@ -21,18 +21,14 @@ public class SchedulerService {
 
     public ScheduleDeliveryResponseDTO scheduleDelivery(ScheduleDeliveryRequestDTO request) {
 
-        // 1 - validate account existence
-        var accountServiceResponse = accountServiceClient.getAccount(request.getUsername());
+        accountServiceClient.getAccount(request.getUsername());
 
-        // 2 - create delivery (STATUS = created)
-        // var createDeliveryResponse =
-        // deliveryServiceClient.createDelivery(request.getUsername(),
-        // request.getPickupCoordinates(), request.getDropOffCoordinates());
+        var createDeliveryResponse = deliveryServiceClient.createDelivery(request.getUsername(),
+                request.getPickupCoordinates(), request.getDropOffCoordinates());
 
         // 3 - create package
-        // packageServiceClient.createPackage(request.getWeight(), request.getHeight(),
-        // request.getWidth(),
-        // createDeliveryResponse.getBody().getDeliveryId());
+        packageServiceClient.createPackage(request.getWeight(), request.getHeight(), request.getWidth(),
+                createDeliveryResponse.getBody().getDeliveryId());
 
         // 4 - select drone for delivery
 

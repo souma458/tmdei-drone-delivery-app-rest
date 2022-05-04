@@ -1,6 +1,7 @@
-export default class Location {
-  constructor(latitude, longitude) {
-    this.latitude = latitude;
-    this.longitude = longitude;
-  }
-}
+import mongoose from "mongoose";
+const { Schema } = mongoose;
+
+export const LocationSchema = new Schema({
+  latitude: { type: Number },
+  longitude: { type: Number },
+});

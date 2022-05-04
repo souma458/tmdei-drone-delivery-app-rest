@@ -1,5 +1,7 @@
-const { Schema, model } = require("mongoose");
-var Location = require("./location.js");
+import mongoose from "mongoose";
+const { Schema, model } = mongoose;
+import { DeliveryStatus } from "./enums/deliveryStatus.js";
+import { LocationSchema as Location } from "./location.js";
 
 const DeliverySchema = new Schema({
   expedited: { type: Boolean, required: true, default: false },
@@ -9,9 +11,12 @@ const DeliverySchema = new Schema({
   transportationRequest: { type: String },
   created: { type: Date, required: true, default: new Date() },
   account: { type: String, required: true },
-  status: { type: string, enum: DeliveryStatus, required: true },
+  status: {
+    type: String,
+    enum: DeliveryStatus,
+    required: true,
+    default: DeliveryStatus.DELIVERY_STATUS_CREATED,
+  },
 });
 
-const Delivery = model("Delivery", DeliverySchema);
-
-module.exports = { Delivery };
+export const Delivery = model("Delivery", DeliverySchema);
