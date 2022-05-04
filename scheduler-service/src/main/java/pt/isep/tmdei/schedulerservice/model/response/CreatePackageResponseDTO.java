@@ -1,7 +1,10 @@
 package pt.isep.tmdei.schedulerservice.model.response;
 
+import lombok.Data;
+
+@Data
 public class CreatePackageResponseDTO {
 
-    public String packageId;
+    private String packageId;
 
 }
