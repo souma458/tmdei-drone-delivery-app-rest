@@ -1,4 +1,5 @@
-const { Schema, model } = require("mongoose");
+import mongoose from "mongoose";
+const { Schema, model } = mongoose;
 
 const PackageSchema = new Schema({
   weight: { type: Number, required: true },
@@ -8,6 +9,4 @@ const PackageSchema = new Schema({
   delivery: { type: String, required: true },
 });
 
-const Package = model("Package", PackageSchema);
-
-module.exports = { Package };
+export const Package = model("Package", PackageSchema);

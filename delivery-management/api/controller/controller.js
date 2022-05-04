@@ -1,6 +1,6 @@
 import { DeliveryService } from "../service/service.js";
 import { CreateDeliveryResponseDTO } from "../model/response/createDeliveryResponseDTO.js";
-import { handleError } from "./erroHandler.js";
+import { handleError } from "./errorHandler.js";
 
 export class DeliveryController {
   constructor() {

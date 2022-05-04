@@ -4,6 +4,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import pt.isep.tmdei.schedulerservice.client.PackageServiceClient;
+import pt.isep.tmdei.schedulerservice.model.request.CreatePackageRequestDTO;
+import pt.isep.tmdei.schedulerservice.model.response.CreatePackageResponseDTO;
 
 public class PackageServiceClientImpl extends ServiceClient implements PackageServiceClient {
 
@@ -15,9 +17,13 @@ public class PackageServiceClientImpl extends ServiceClient implements PackageSe
     }
 
     @Override
-    public ResponseEntity<Void> createPackage(int weight, int height, int width, String delivery) {
-        // TODO Auto-generated method stub
-        return null;
+    public ResponseEntity<CreatePackageResponseDTO> createPackage(int weight, int height, int width, String delivery) {
+        var request = new CreatePackageRequestDTO();
+        request.setWeight(weight);
+        request.setHeight(height);
+        request.setWidth(width);
+        request.setDelivery(delivery);
+        return restTemplate.postForEntity(this.basePath() + "/package", request, CreatePackageResponseDTO.class);
     }
 
 }

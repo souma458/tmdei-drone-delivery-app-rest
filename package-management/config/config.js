@@ -4,20 +4,9 @@ if (!process.env.MONGODB_URI) {
 
 export default {
   appName: "Package Management",
-  /**
-   * Your favorite port
-   */
-  port: parseInt(process.env.PORT, 10) || 8084,
-
-  /**
-   * That long string from mlab
-   */
+  port: parseInt(process.env.PORT, 10) || 8080,
   databaseURL: process.env.MONGODB_URI,
-
-  /**
-   * API configs
-   */
   api: {
-    prefix: "/pm",
+    prefix: process.env.PACKAGE_SERVICE_PREFIX || "/pm",
   },
 };
