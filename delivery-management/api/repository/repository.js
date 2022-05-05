@@ -9,4 +9,16 @@ export class DeliveryRepository {
     const deliveryToSave = new Delivery(delivery);
     return await deliveryToSave.save();
   }
+
+  async findById(id) {
+    const delivery = await this.model
+      .findById(id)
+      .populate("pickup")
+      .populate("dropOff");
+    return delivery;
+  }
+
+  async update(deliveryId, newDelivery) {
+    return await this.model.findByIdAndUpdate(deliveryId, newDelivery);
+  }
 }

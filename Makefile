@@ -20,4 +20,4 @@ teardown:
 	tmdei-drone-delivery-app-rest_mongodb
 
 start-some: teardown
-	@docker-compose up mysqldb mongodb scheduler user-management delivery-management package-management
+	@docker-compose up mysqldb mongodb scheduler user-management delivery-management package-management drone-management

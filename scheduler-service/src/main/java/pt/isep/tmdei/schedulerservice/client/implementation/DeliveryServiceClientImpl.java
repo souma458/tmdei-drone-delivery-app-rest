@@ -1,11 +1,15 @@
 package pt.isep.tmdei.schedulerservice.client.implementation;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 import pt.isep.tmdei.schedulerservice.client.DeliveryServiceClient;
 import pt.isep.tmdei.schedulerservice.model.data.CoordinatesDTO;
 import pt.isep.tmdei.schedulerservice.model.request.CreateDeliveryRequestDTO;
+import pt.isep.tmdei.schedulerservice.model.request.UpdateTransportOfDeliveryRequestDTO;
 import pt.isep.tmdei.schedulerservice.model.response.CreateDeliveryResponseDTO;
 
 public class DeliveryServiceClientImpl extends ServiceClient implements DeliveryServiceClient {
@@ -14,7 +18,7 @@ public class DeliveryServiceClientImpl extends ServiceClient implements Delivery
 
     public DeliveryServiceClientImpl(String url, String prefix) {
         super(url, prefix);
-        this.restTemplate = new RestTemplate();
+        this.restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory());
     }
 
     @Override
@@ -25,6 +29,14 @@ public class DeliveryServiceClientImpl extends ServiceClient implements Delivery
         request.setPickupCoordinates(pickupCoordinates);
         request.setDropOffCoordinates(dropOffCoordinates);
         return restTemplate.postForEntity(this.basePath() + "/delivery", request, CreateDeliveryResponseDTO.class);
+    }
+
+    @Override
+    public ResponseEntity<Void> updateDeliveryDrone(String deliveryId, Long droneId) {
+        var request = new UpdateTransportOfDeliveryRequestDTO();
+        request.setDrone(droneId);
+        return restTemplate.exchange(this.basePath() + "/delivery/" + deliveryId, HttpMethod.PATCH,
+                new HttpEntity<UpdateTransportOfDeliveryRequestDTO>(request), Void.class);
     }
 
 }

@@ -13,4 +13,8 @@ export class DeliveryService {
     };
     return await this.repository.save(deliveryToSave);
   }
+
+  async partiallyUpdateDelivery(deliveryId, delivery) {
+    return await this.repository.update(deliveryId, delivery);
+  }
 }

@@ -5,9 +5,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import pt.isep.tmdei.schedulerservice.client.DeliveryServiceClient;
+import pt.isep.tmdei.schedulerservice.client.DroneServiceClient;
 import pt.isep.tmdei.schedulerservice.client.PackageServiceClient;
 import pt.isep.tmdei.schedulerservice.client.UserServiceClient;
 import pt.isep.tmdei.schedulerservice.client.implementation.DeliveryServiceClientImpl;
+import pt.isep.tmdei.schedulerservice.client.implementation.DroneServiceClientImpl;
 import pt.isep.tmdei.schedulerservice.client.implementation.PackageServiceClientImpl;
 import pt.isep.tmdei.schedulerservice.client.implementation.UserServiceClientImpl;
 
@@ -32,6 +34,12 @@ public class ClientConfig {
     @Value("${package-service.prefix}")
     private String packageServicePrefix;
 
+    @Value("${drone-service.url}")
+    private String droneServiceUrl;
+
+    @Value("${drone-service.prefix}")
+    private String droneServicePrefix;
+
     @Bean
     public UserServiceClient accountServiceClient() {
         return new UserServiceClientImpl(userServiceUrl, userServicePrefix);
@@ -45,6 +53,11 @@ public class ClientConfig {
     @Bean
     public PackageServiceClient packageServiceClient() {
         return new PackageServiceClientImpl(packageServiceUrl, packageServicePrefix);
+    }
+
+    @Bean
+    public DroneServiceClient droneServiceClient() {
+        return new DroneServiceClientImpl(droneServiceUrl, droneServicePrefix);
     }
 
 }

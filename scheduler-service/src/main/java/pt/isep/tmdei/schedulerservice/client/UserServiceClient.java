@@ -6,6 +6,6 @@ import pt.isep.tmdei.schedulerservice.model.response.GetAccountResponseDTO;
 
 public interface UserServiceClient {
 
-    public ResponseEntity<GetAccountResponseDTO> getAccount(final String username);
+    ResponseEntity<GetAccountResponseDTO> getAccount(final String username);
 
 }

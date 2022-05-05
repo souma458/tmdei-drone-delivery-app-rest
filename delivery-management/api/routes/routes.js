@@ -9,5 +9,9 @@ export default () => {
     return controller.createDelivery(req, res);
   });
 
+  app.patch("/delivery/:deliveryId", (req, res) => {
+    return controller.partiallyUpdateDelivery(req, res);
+  });
+
   return app;
 };

@@ -17,6 +17,8 @@ services:
       DELIVERY-SERVICE_PREFIX: $DELIVERY_SERVICE_PREFIX
       PACKAGE-SERVICE_URL: $PACKAGE_SERVICE_URL
       PACKAGE-SERVICE_PREFIX: $PACKAGE_SERVICE_PREFIX
+      DRONE-SERVICE_URL: $DRONE_SERVICE_URL
+      DRONE-SERVICE_PREFIX: $DRONE_SERVICE_PREFIX
     networks:
       - backend
 
@@ -29,7 +31,7 @@ services:
       - "${USER_SERVICE_PORT}:${INTERNAL_PORT}"
     restart: always
     depends_on:
-      - mongodb
+      - mysqldb
     environment:
       SERVER_SERVLET_CONTEXT-PATH: $USER_SERVICE_PREFIX
       SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/user_db
@@ -78,11 +80,12 @@ services:
       context: drone-management
       dockerfile: Dockerfile
     ports:
-      - "8083:8080"
+      - "${DRONE_SERVICE_PORT}:${INTERNAL_PORT}"
     restart: always
     depends_on:
-      - mongodb
+      - mysqldb
     environment:
+      SERVER_SERVLET_CONTEXT-PATH: $DRONE_SERVICE_PREFIX
       SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/drone_db
       SPRING_DATASOURCE_USERNAME: $DRONE_DB_USERNAME
       SPRING_DATASOURCE_PASSWORD: $DRONE_DB_PASSWORD

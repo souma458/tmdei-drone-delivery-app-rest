@@ -16,28 +16,25 @@ public class SchedulerService {
     private final UserServiceClient accountServiceClient;
     private final DeliveryServiceClient deliveryServiceClient;
     private final PackageServiceClient packageServiceClient;
+    private final TransportationService transportationService;
 
     public ScheduleDeliveryResponseDTO scheduleDelivery(ScheduleDeliveryRequestDTO request) {
 
         accountServiceClient.getAccount(request.getUsername());
 
-        var createDeliveryResponse = deliveryServiceClient.createDelivery(request.getUsername(),
-                request.getPickupCoordinates(), request.getDropOffCoordinates());
+        var createDeliveryResponse = deliveryServiceClient
+                .createDelivery(request.getUsername(), request.getPickupCoordinates(), request.getDropOffCoordinates())
+                .getBody();
 
-        // 3 - create package
         var createPackageResponse = packageServiceClient.createPackage(request.getWeight(), request.getHeight(),
-                request.getWidth(), createDeliveryResponse.getBody().getDeliveryId());
+                request.getWidth(), createDeliveryResponse.getDeliveryId()).getBody();
 
-        // 4 - select drone for delivery
+        var transportation = transportationService.scheduleDeliveryTransport(createDeliveryResponse.getDeliveryId());
 
-        // 5 - create transportation request if no drone is available
-
-        var response = new ScheduleDeliveryResponseDTO();
-        response.setUsername(request.getUsername());
-        response.setDeliveryId(createDeliveryResponse.getBody().getDeliveryId());
-        response.setPackageId(createPackageResponse.getBody().getPackageId());
-        response.setStatus(createDeliveryResponse.getBody().getStatus());
-        response.setCreationDate(createDeliveryResponse.getBody().getCreated());
+        var response = new ScheduleDeliveryResponseDTO(request.getUsername(), createDeliveryResponse.getDeliveryId(),
+                createPackageResponse.getPackageId(), createDeliveryResponse.getStatus(),
+                createDeliveryResponse.getCreated());
+        response.setTransportation(transportation);
 
         return response;
     }

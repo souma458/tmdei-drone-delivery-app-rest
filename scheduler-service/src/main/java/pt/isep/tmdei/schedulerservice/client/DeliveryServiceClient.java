@@ -7,7 +7,9 @@ import pt.isep.tmdei.schedulerservice.model.response.CreateDeliveryResponseDTO;
 
 public interface DeliveryServiceClient {
 
-    public ResponseEntity<CreateDeliveryResponseDTO> createDelivery(final String username,
+    ResponseEntity<CreateDeliveryResponseDTO> createDelivery(final String username,
             final CoordinatesDTO pickupCoordinates, final CoordinatesDTO dropOffCoordinates);
+
+    ResponseEntity<Void> updateDeliveryDrone(final String deliveryId, final Long droneId);
 
 }

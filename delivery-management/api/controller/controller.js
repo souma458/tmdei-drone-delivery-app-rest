@@ -15,4 +15,16 @@ export class DeliveryController {
       handleError(res, err);
     }
   }
+
+  async partiallyUpdateDelivery(req, res) {
+    try {
+      await this.service.partiallyUpdateDelivery(
+        req.params.deliveryId,
+        req.body
+      );
+      res.status(204).send();
+    } catch (err) {
+      handleError(res, err);
+    }
+  }
 }
