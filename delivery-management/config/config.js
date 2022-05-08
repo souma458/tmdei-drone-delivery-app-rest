@@ -4,20 +4,9 @@ if (!process.env.MONGODB_URI) {
 
 export default {
   appName: "Delivery Management",
-  /**
-   * Your favorite port
-   */
-  port: parseInt(process.env.PORT, 10) || 8084,
-
-  /**
-   * That long string from mlab
-   */
+  port: parseInt(process.env.PORT, 10) || 8080,
   databaseURL: process.env.MONGODB_URI,
-
-  /**
-   * API configs
-   */
   api: {
-    prefix: "/dm",
+    prefix: process.env.DELIVERY_SERVICE_PREFIX || "/dm",
   },
 };
