@@ -19,6 +19,8 @@ services:
       PACKAGE-SERVICE_PREFIX: $PACKAGE_SERVICE_PREFIX
       DRONE-SERVICE_URL: $DRONE_SERVICE_URL
       DRONE-SERVICE_PREFIX: $DRONE_SERVICE_PREFIX
+      THIRD-PARTY-TRANSPORTATION-SERVICE_URL: $THIRD_PARTY_TRANSPORTATION_SERVICE_URL
+      THIRD-PARTY-TRANSPORTATION-SERVICE_PREFIX: $THIRD_PARTY_TRANSPORTATION_SERVICE_PREFIX
     networks:
       - backend
 
@@ -92,17 +94,19 @@ services:
     networks:
       - backend
 
-  third-party-transportation:
-    container_name: third-party-transportation
+  third-party-transportation-management:
+    container_name: third-party-transportation-management
     build:
       context: third-party-transportation-service
       dockerfile: Dockerfile
     ports:
-      - "8084:8080"
+      - "${THIRD_PARTY_TRANSPORTATION_SERVICE_PORT}:${INTERNAL_PORT}"
     restart: always
     depends_on:
       - mongodb
     environment:
+      PORT: ${INTERNAL_PORT}
+      THIRD_PARTY_TRANSPORTATION_SERVICE_PREFIX: ${THIRD_PARTY_TRANSPORTATION_SERVICE_PREFIX}
       MONGODB_URI: mongodb://mongodb/third_party_transportation_db
     networks:
       - backend

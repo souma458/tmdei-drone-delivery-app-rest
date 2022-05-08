@@ -4,20 +4,9 @@ if (!process.env.MONGODB_URI) {
 
 export default {
   appName: "Third Party Transportation Service",
-  /**
-   * Your favorite port
-   */
   port: parseInt(process.env.PORT, 10) || 8084,
-
-  /**
-   * That long string from mlab
-   */
   databaseURL: process.env.MONGODB_URI,
-
-  /**
-   * API configs
-   */
   api: {
-    prefix: "/tp",
+    prefix: process.env.THIRD_PARTY_TRANSPORTATION_SERVICE_PREFIX || "/tpt",
   },
 };

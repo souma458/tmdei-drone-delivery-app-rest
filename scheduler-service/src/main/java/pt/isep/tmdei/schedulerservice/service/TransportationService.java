@@ -15,8 +15,7 @@ public class TransportationService {
 
     private final DroneServiceClient droneServiceClient;
     private final DeliveryServiceClient deliveryServiceClient;
-    // private final ThirdPartyTransportationServiceClient
-    // thirdPartyTransportationServiceClient;
+    private final ThirdPartyTransportationServiceClient thirdPartyTransportationServiceClient;
 
     public TransportationDTO scheduleDeliveryTransport(final String deliveryId) {
         var transportation = new TransportationDTO();
@@ -26,7 +25,9 @@ public class TransportationService {
             transportation.setDroneId(bookDroneResponse.getBody().getDroneId());
             deliveryServiceClient.updateDeliveryDrone(deliveryId, bookDroneResponse.getBody().getDroneId());
         } catch (HttpClientErrorException.NotFound notFoundClientException) {
-            // 5 - create transportation request if no drone is available
+            var createTransportationRequestResponse = thirdPartyTransportationServiceClient
+                    .createThirdPartyTransportationRequest(deliveryId);
+            transportation.setTransportationRequestId(createTransportationRequestResponse.getBody().getRequestId());
         }
 
         return transportation;

@@ -7,10 +7,12 @@ import org.springframework.context.annotation.Configuration;
 import pt.isep.tmdei.schedulerservice.client.DeliveryServiceClient;
 import pt.isep.tmdei.schedulerservice.client.DroneServiceClient;
 import pt.isep.tmdei.schedulerservice.client.PackageServiceClient;
+import pt.isep.tmdei.schedulerservice.client.ThirdPartyTransportationServiceClient;
 import pt.isep.tmdei.schedulerservice.client.UserServiceClient;
 import pt.isep.tmdei.schedulerservice.client.implementation.DeliveryServiceClientImpl;
 import pt.isep.tmdei.schedulerservice.client.implementation.DroneServiceClientImpl;
 import pt.isep.tmdei.schedulerservice.client.implementation.PackageServiceClientImpl;
+import pt.isep.tmdei.schedulerservice.client.implementation.ThirdPartyTransporationClientImpl;
 import pt.isep.tmdei.schedulerservice.client.implementation.UserServiceClientImpl;
 
 @Configuration
@@ -40,6 +42,12 @@ public class ClientConfig {
     @Value("${drone-service.prefix}")
     private String droneServicePrefix;
 
+    @Value("${third-party-transportation-service.url}")
+    private String thirdPartyTransportationServiceUrl;
+
+    @Value("${third-party-transportation-service.prefix}")
+    private String thirdPartyTransportationPrefix;
+
     @Bean
     public UserServiceClient accountServiceClient() {
         return new UserServiceClientImpl(userServiceUrl, userServicePrefix);
@@ -58,6 +66,12 @@ public class ClientConfig {
     @Bean
     public DroneServiceClient droneServiceClient() {
         return new DroneServiceClientImpl(droneServiceUrl, droneServicePrefix);
+    }
+
+    @Bean
+    public ThirdPartyTransportationServiceClient thirdPartyTransportationServiceClient() {
+        return new ThirdPartyTransporationClientImpl(thirdPartyTransportationServiceUrl,
+                thirdPartyTransportationPrefix);
     }
 
 }
