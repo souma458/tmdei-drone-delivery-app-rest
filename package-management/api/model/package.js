@@ -5,7 +5,7 @@ const PackageSchema = new Schema({
   weight: { type: Number, required: true },
   height: { type: Number, required: true },
   width: { type: Number, required: true },
-  senderRef: { type: String },
+  senderRef: { type: Schema.Types.ObjectId, ref: "Tag" },
   delivery: { type: String, required: true },
 });
 

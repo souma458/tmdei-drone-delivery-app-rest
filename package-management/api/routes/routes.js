@@ -9,5 +9,9 @@ export default () => {
     return controller.createPackage(req, res);
   });
 
+  app.post("/package/tag/:packageId", (req, res) => {
+    return controller.createTagForPackage(req, res);
+  });
+
   return app;
 };

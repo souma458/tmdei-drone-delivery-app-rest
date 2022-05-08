@@ -12,6 +12,5 @@ public class ScheduleDeliveryRequestDTO {
     private int weight;
     private int width;
     private int height;
-    private String sendersRef;
 
 }

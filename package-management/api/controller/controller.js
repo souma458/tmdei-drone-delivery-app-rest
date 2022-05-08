@@ -15,4 +15,16 @@ export class PackageController {
       handleError(res, err);
     }
   }
+
+  async createTagForPackage(req, res) {
+    try {
+      const tag = await this.service.createTagForPackage(
+        req.params.packageId,
+        req.body
+      );
+      res.status(201).send(tag);
+    } catch (err) {
+      handleError(res, err);
+    }
+  }
 }

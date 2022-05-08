@@ -9,4 +9,8 @@ export class PackageRepository {
     const packageToSave = new Package(packageToDeliver);
     return await packageToSave.save();
   }
+
+  async findById(packageId) {
+    return await this.model.findById(packageId);
+  }
 }
