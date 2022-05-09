@@ -1,5 +1,4 @@
 import { DeliveryService } from "../service/service.js";
-import { CreateDeliveryResponseDTO } from "../model/response/createDeliveryResponseDTO.js";
 import { handleError } from "./errorHandler.js";
 
 export class DeliveryController {
@@ -7,10 +6,19 @@ export class DeliveryController {
     this.service = new DeliveryService();
   }
 
+  async get(req, res) {
+    try {
+      const delivery = await this.service.get(req.params.deliveryId);
+      res.status(200).send(delivery);
+    } catch (err) {
+      handleError(res, err);
+    }
+  }
+
   async createDelivery(req, res) {
     try {
       const delivery = await this.service.createDelivery(req.body);
-      res.status(201).send(new CreateDeliveryResponseDTO(delivery));
+      res.status(201).send(delivery);
     } catch (err) {
       handleError(res, err);
     }
@@ -32,6 +40,15 @@ export class DeliveryController {
     try {
       const delivery = await this.service.readyDelivery(req.params.drone);
       res.status(200).send(delivery);
+    } catch (err) {
+      handleError(res, err);
+    }
+  }
+
+  async completeDelivery(req, res) {
+    try {
+      await this.service.completeDelivery(req.params.delivery);
+      res.status(204).send();
     } catch (err) {
       handleError(res, err);
     }

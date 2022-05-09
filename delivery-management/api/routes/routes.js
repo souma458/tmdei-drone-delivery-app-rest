@@ -17,5 +17,13 @@ export default () => {
     return controller.readyDelivery(req, res);
   });
 
+  app.put("/delivery/:delivery/complete", (req, res) => {
+    return controller.completeDelivery(req, res);
+  });
+
+  app.get("/delivery/:deliveryId", (req, res) => {
+    return controller.get(req, res);
+  });
+
   return app;
 };

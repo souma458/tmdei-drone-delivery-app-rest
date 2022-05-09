@@ -8,4 +8,6 @@ public interface DroneServiceClient {
 
     ResponseEntity<BookDroneResponseDTO> bookDrone();
 
+    ResponseEntity<Void> idleDrone(String drone);
+
 }

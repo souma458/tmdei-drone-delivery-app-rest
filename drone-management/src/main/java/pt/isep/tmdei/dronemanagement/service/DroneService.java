@@ -7,6 +7,7 @@ import pt.isep.tmdei.dronemanagement.model.DroneStatus;
 import pt.isep.tmdei.dronemanagement.model.response.BookDroneResponseDTO;
 import pt.isep.tmdei.dronemanagement.repository.DroneRepository;
 import pt.isep.tmdei.dronemanagement.repository.ModelRepository;
+import pt.isep.tmdei.dronemanagement.service.exception.DroneNotFoundException;
 import pt.isep.tmdei.dronemanagement.service.exception.NoDroneAvailableException;
 
 @Service
@@ -31,6 +32,12 @@ public class DroneService {
         response.setModel(model.getId());
 
         return response;
+    }
+
+    public void idleDrone(Long droneId) {
+        var drone = droneRepository.findById(droneId).orElseThrow(() -> new DroneNotFoundException(droneId));
+        drone.setStatus(DroneStatus.IDLE);
+        droneRepository.save(drone);
     }
 
 }

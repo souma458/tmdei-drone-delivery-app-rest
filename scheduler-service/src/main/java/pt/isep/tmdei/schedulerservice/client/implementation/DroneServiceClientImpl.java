@@ -22,4 +22,9 @@ public class DroneServiceClientImpl extends ServiceClient implements DroneServic
                 BookDroneResponseDTO.class);
     }
 
+    @Override
+    public ResponseEntity<Void> idleDrone(String drone) {
+        return restTemplate.exchange(this.basePath() + "/drone/" + drone + "/idle", HttpMethod.PUT, null, Void.class);
+    }
+
 }

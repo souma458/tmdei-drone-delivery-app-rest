@@ -25,9 +25,15 @@ public class SchedulerController {
         return new ResponseEntity<>(service.scheduleDelivery(request), HttpStatus.CREATED);
     }
 
-    @PostMapping("/pickup-package/{drone}")
+    @PostMapping("/pickup-delivery/{drone}")
     public ResponseEntity<PickupPackageResponseDTO> pickupPackage(@PathVariable(value = "drone") String drone) {
         return new ResponseEntity<>(service.pickupPackage(drone), HttpStatus.OK);
+    }
+
+    @PostMapping("/complete-delivery/{delivery}")
+    public ResponseEntity<Void> deliverPackage(@PathVariable(value = "delivery") String delivery) {
+        service.deliverPackage(delivery);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }
