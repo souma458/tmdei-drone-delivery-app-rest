@@ -11,6 +11,7 @@ import pt.isep.tmdei.schedulerservice.model.data.CoordinatesDTO;
 import pt.isep.tmdei.schedulerservice.model.request.CreateDeliveryRequestDTO;
 import pt.isep.tmdei.schedulerservice.model.request.UpdateTransportOfDeliveryRequestDTO;
 import pt.isep.tmdei.schedulerservice.model.response.CreateDeliveryResponseDTO;
+import pt.isep.tmdei.schedulerservice.model.response.PickupPackageResponseDTO;
 
 public class DeliveryServiceClientImpl extends ServiceClient implements DeliveryServiceClient {
 
@@ -37,6 +38,12 @@ public class DeliveryServiceClientImpl extends ServiceClient implements Delivery
         request.setDrone(droneId);
         return restTemplate.exchange(this.basePath() + "/delivery/" + deliveryId, HttpMethod.PATCH,
                 new HttpEntity<UpdateTransportOfDeliveryRequestDTO>(request), Void.class);
+    }
+
+    @Override
+    public ResponseEntity<PickupPackageResponseDTO> pickupPackage(String drone) {
+        return restTemplate.exchange(this.basePath() + "/delivery/" + drone + "/pickup", HttpMethod.PUT, null,
+                PickupPackageResponseDTO.class);
     }
 
 }

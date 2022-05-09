@@ -27,4 +27,13 @@ export class DeliveryController {
       handleError(res, err);
     }
   }
+
+  async readyDelivery(req, res) {
+    try {
+      const delivery = await this.service.readyDelivery(req.params.drone);
+      res.status(200).send(delivery);
+    } catch (err) {
+      handleError(res, err);
+    }
+  }
 }

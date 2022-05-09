@@ -13,5 +13,9 @@ export default () => {
     return controller.partiallyUpdateDelivery(req, res);
   });
 
+  app.put("/delivery/:drone/pickup", (req, res) => {
+    return controller.readyDelivery(req, res);
+  });
+
   return app;
 };

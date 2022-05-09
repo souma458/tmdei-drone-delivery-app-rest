@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 
 import pt.isep.tmdei.schedulerservice.model.data.CoordinatesDTO;
 import pt.isep.tmdei.schedulerservice.model.response.CreateDeliveryResponseDTO;
+import pt.isep.tmdei.schedulerservice.model.response.PickupPackageResponseDTO;
 
 public interface DeliveryServiceClient {
 
@@ -11,5 +12,7 @@ public interface DeliveryServiceClient {
             final CoordinatesDTO pickupCoordinates, final CoordinatesDTO dropOffCoordinates);
 
     ResponseEntity<Void> updateDeliveryDrone(final String deliveryId, final Long droneId);
+
+    ResponseEntity<PickupPackageResponseDTO> pickupPackage(String drone);
 
 }
