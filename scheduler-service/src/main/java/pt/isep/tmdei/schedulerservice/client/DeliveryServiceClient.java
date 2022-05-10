@@ -12,12 +12,14 @@ public interface DeliveryServiceClient {
     ResponseEntity<CreateDeliveryResponseDTO> createDelivery(final String username,
             final CoordinatesDTO pickupCoordinates, final CoordinatesDTO dropOffCoordinates);
 
+    ResponseEntity<GetDeliveryResponseDTO> getDelivery(String delivery);
+
     ResponseEntity<Void> updateDeliveryDrone(final String deliveryId, final Long droneId);
 
     ResponseEntity<PickupPackageResponseDTO> pickupPackage(String drone);
 
     ResponseEntity<Void> completeDelivery(String delivery);
 
-    ResponseEntity<GetDeliveryResponseDTO> getDelivery(String delivery);
+    ResponseEntity<Void> cancelDelivery(String delivery);
 
 }

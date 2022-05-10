@@ -53,4 +53,13 @@ export class DeliveryController {
       handleError(res, err);
     }
   }
+
+  async cancelDelivery(req, res) {
+    try {
+      await this.service.cancelDelivery(req.params.delivery);
+      res.status(204).send();
+    } catch (err) {
+      handleError(res, err);
+    }
+  }
 }

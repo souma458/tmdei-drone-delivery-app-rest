@@ -34,6 +34,11 @@ public class DeliveryServiceClientImpl extends ServiceClient implements Delivery
     }
 
     @Override
+    public ResponseEntity<GetDeliveryResponseDTO> getDelivery(String delivery) {
+        return restTemplate.getForEntity(this.basePath() + "/delivery/" + delivery, GetDeliveryResponseDTO.class);
+    }
+
+    @Override
     public ResponseEntity<Void> updateDeliveryDrone(String deliveryId, Long droneId) {
         var request = new UpdateTransportOfDeliveryRequestDTO();
         request.setDrone(droneId);
@@ -54,8 +59,9 @@ public class DeliveryServiceClientImpl extends ServiceClient implements Delivery
     }
 
     @Override
-    public ResponseEntity<GetDeliveryResponseDTO> getDelivery(String delivery) {
-        return restTemplate.getForEntity(this.basePath() + "/delivery/" + delivery, GetDeliveryResponseDTO.class);
+    public ResponseEntity<Void> cancelDelivery(String delivery) {
+        return restTemplate.exchange(this.basePath() + "/delivery/" + delivery + "/cancel", HttpMethod.PUT, null,
+                Void.class);
     }
 
 }

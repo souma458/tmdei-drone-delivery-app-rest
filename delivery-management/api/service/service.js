@@ -1,6 +1,8 @@
 import { DeliveryResponseDTO } from "../model/response/deliveryResponseDTO.js";
 import { DeliveryRepository } from "../repository/repository.js";
 import { DeliveryStatus } from "../model/enums/deliveryStatus.js";
+import { DeliveryNotFoundException } from "../exceptions/deliveryNotFound.js";
+import { InvalidStatusChangeException } from "../exceptions/invalidStatusChange.js";
 
 export class DeliveryService {
   constructor() {
@@ -9,6 +11,9 @@ export class DeliveryService {
 
   async get(deliveryId) {
     const delivery = await this.repository.findById(deliveryId);
+    if (!delivery) {
+      throw new DeliveryNotFoundException(deliveryId);
+    }
     return new DeliveryResponseDTO(delivery);
   }
 
@@ -47,6 +52,20 @@ export class DeliveryService {
   async completeDelivery(delivery) {
     return await this.repository.update(delivery, {
       status: DeliveryStatus.DELIVERY_STATUS_COMPLETED,
+    });
+  }
+
+  async cancelDelivery(delivery) {
+    const dbDelivery = await this.repository.findById(delivery);
+    if (!dbDelivery) {
+      throw new DeliveryNotFoundException(delivery);
+    }
+    if (dbDelivery.status != DeliveryStatus.DELIVERY_STATUS_CREATED) {
+      throw new InvalidStatusChangeException();
+    }
+
+    return await this.repository.update(delivery, {
+      status: DeliveryStatus.DELIVERY_STATUS_CANCELED,
     });
   }
 }

@@ -9,6 +9,10 @@ export default () => {
     return controller.createDelivery(req, res);
   });
 
+  app.get("/delivery/:deliveryId", (req, res) => {
+    return controller.get(req, res);
+  });
+
   app.patch("/delivery/:deliveryId", (req, res) => {
     return controller.partiallyUpdateDelivery(req, res);
   });
@@ -21,8 +25,8 @@ export default () => {
     return controller.completeDelivery(req, res);
   });
 
-  app.get("/delivery/:deliveryId", (req, res) => {
-    return controller.get(req, res);
+  app.put("/delivery/:delivery/cancel", (req, res) => {
+    return controller.cancelDelivery(req, res);
   });
 
   return app;

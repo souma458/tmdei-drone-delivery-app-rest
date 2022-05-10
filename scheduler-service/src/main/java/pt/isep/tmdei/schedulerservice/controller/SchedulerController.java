@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import lombok.RequiredArgsConstructor;
@@ -25,14 +26,20 @@ public class SchedulerController {
         return new ResponseEntity<>(service.scheduleDelivery(request), HttpStatus.CREATED);
     }
 
-    @PostMapping("/pickup-delivery/{drone}")
+    @PutMapping("/pickup-delivery/{drone}")
     public ResponseEntity<PickupPackageResponseDTO> pickupPackage(@PathVariable(value = "drone") String drone) {
         return new ResponseEntity<>(service.pickupPackage(drone), HttpStatus.OK);
     }
 
-    @PostMapping("/complete-delivery/{delivery}")
-    public ResponseEntity<Void> deliverPackage(@PathVariable(value = "delivery") String delivery) {
-        service.deliverPackage(delivery);
+    @PutMapping("/complete-delivery/{delivery}")
+    public ResponseEntity<Void> completeDelivery(@PathVariable(value = "delivery") String delivery) {
+        service.completeDelivery(delivery);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping("/cancel-delivery/{delivery}")
+    public ResponseEntity<Void> cancelDelivery(@PathVariable(value = "delivery") String delivery) {
+        service.cancelDelivery(delivery);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

@@ -46,8 +46,14 @@ public class SchedulerService {
         return deliveryServiceClient.pickupPackage(drone).getBody();
     }
 
-    public void deliverPackage(String delivery) {
+    public void completeDelivery(String delivery) {
         deliveryServiceClient.completeDelivery(delivery);
+        var getDeliveryResponse = deliveryServiceClient.getDelivery(delivery).getBody();
+        droneServiceClient.idleDrone(getDeliveryResponse.getDrone());
+    }
+
+    public void cancelDelivery(String delivery) {
+        deliveryServiceClient.cancelDelivery(delivery);
         var getDeliveryResponse = deliveryServiceClient.getDelivery(delivery).getBody();
         droneServiceClient.idleDrone(getDeliveryResponse.getDrone());
     }
