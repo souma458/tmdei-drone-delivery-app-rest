@@ -37,4 +37,12 @@ export class DeliveryRepository {
     }
     return null;
   }
+
+  async findByUsername(username) {
+    const deliveries = await this.model
+      .find({ username: username })
+      .populate("pickup")
+      .populate("dropOff");
+    return deliveries;
+  }
 }

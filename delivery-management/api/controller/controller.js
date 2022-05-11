@@ -15,6 +15,15 @@ export class DeliveryController {
     }
   }
 
+  async getDeliveries(req, res) {
+    try {
+      const deliveries = await this.service.getDeliveries(req.params.username);
+      res.status(200).send(deliveries);
+    } catch (err) {
+      handleError(res, err);
+    }
+  }
+
   async createDelivery(req, res) {
     try {
       const delivery = await this.service.createDelivery(req.body);

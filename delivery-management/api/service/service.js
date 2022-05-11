@@ -9,16 +9,21 @@ import { InvalidStatusChangeException } from "../exceptions/invalidStatusChange.
 
 export class DeliveryService {
   constructor() {
-    this.repository = new DeliveryRepository();
+    this.deliveryRepository = new DeliveryRepository();
     this.confirmationRepository = new ConfirmationRepository();
   }
 
   async get(deliveryId) {
-    const delivery = await this.repository.findById(deliveryId);
+    const delivery = await this.deliveryRepository.findById(deliveryId);
     if (!delivery) {
       throw new DeliveryNotFoundException(deliveryId);
     }
     return new DeliveryResponseDTO(delivery);
+  }
+
+  async getDeliveries(username) {
+    const deliveries = await this.deliveryRepository.findByUsername(username);
+    return deliveries.map((d) => new DeliveryResponseDTO(d));
   }
 
   async createDelivery(delivery) {
@@ -27,21 +32,20 @@ export class DeliveryService {
       dropOff: delivery.dropOffCoordinates,
       account: delivery.username,
     };
-    const savedDelivery = await this.repository.save(deliveryToSave);
+    const savedDelivery = await this.deliveryRepository.save(deliveryToSave);
     return new DeliveryResponseDTO(savedDelivery);
   }
 
   async partiallyUpdateDelivery(deliveryId, delivery) {
-    return await this.repository.update(deliveryId, delivery);
+    return await this.deliveryRepository.update(deliveryId, delivery);
   }
 
   async readyDelivery(drone) {
-    const delivery = await this.repository.findOldestReadyToDeliverByDrone(
-      drone
-    );
+    const delivery =
+      await this.deliveryRepository.findOldestReadyToDeliverByDrone(drone);
     delivery.drone = drone;
     delivery.status = DeliveryStatus.DELIVERY_STATUS_HEADED_TO_DROP_OFF;
-    const updatedDelivery = await this.repository.update(
+    const updatedDelivery = await this.deliveryRepository.update(
       delivery._id,
       delivery
     );
@@ -54,13 +58,13 @@ export class DeliveryService {
   }
 
   async completeDelivery(delivery) {
-    return await this.repository.update(delivery, {
+    return await this.deliveryRepository.update(delivery, {
       status: DeliveryStatus.DELIVERY_STATUS_COMPLETED,
     });
   }
 
   async cancelDelivery(delivery) {
-    const dbDelivery = await this.repository.findById(delivery);
+    const dbDelivery = await this.deliveryRepository.findById(delivery);
     if (!dbDelivery) {
       throw new DeliveryNotFoundException(delivery);
     }
@@ -68,7 +72,7 @@ export class DeliveryService {
       throw new InvalidStatusChangeException();
     }
 
-    return await this.repository.update(delivery, {
+    return await this.deliveryRepository.update(delivery, {
       status: DeliveryStatus.DELIVERY_STATUS_CANCELED,
     });
   }
@@ -82,7 +86,7 @@ export class DeliveryService {
         "The request is invalid. Confirm that both delivery and signature/fingerprint are defined."
       );
     }
-    const dbDelivery = await this.repository.findById(
+    const dbDelivery = await this.deliveryRepository.findById(
       confirmationInfo.delivery
     );
     if (!dbDelivery) {

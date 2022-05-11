@@ -13,6 +13,10 @@ export default () => {
     return controller.get(req, res);
   });
 
+  app.get("/deliveries/:username", (req, res) => {
+    return controller.getDeliveries(req, res);
+  });
+
   app.patch("/delivery/:deliveryId", (req, res) => {
     return controller.partiallyUpdateDelivery(req, res);
   });
