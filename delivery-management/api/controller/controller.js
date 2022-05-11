@@ -62,4 +62,15 @@ export class DeliveryController {
       handleError(res, err);
     }
   }
+
+  async createDeliveryConfirmation(req, res) {
+    try {
+      const confirmation = await this.service.createDeliveryConfirmation(
+        req.body
+      );
+      res.status(201).send(confirmation);
+    } catch (err) {
+      handleError(res, err);
+    }
+  }
 }

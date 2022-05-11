@@ -1,10 +1,10 @@
-const { Schema, model } = require("mongoose");
+import mongoose from "mongoose";
+const { Schema, model } = mongoose;
 
 const ConfirmationSchema = new Schema({
   signature: { type: String },
   fingerPrint: { type: String },
+  delivery: { type: Schema.Types.ObjectId, ref: "Delivery" },
 });
 
-const Confirmation = model("Confirmation", ConfirmationSchema);
-
-module.exports = { Confirmation };
+export const Confirmation = model("Confirmation", ConfirmationSchema);

@@ -29,5 +29,9 @@ export default () => {
     return controller.cancelDelivery(req, res);
   });
 
+  app.post("/confirmation", (req, res) => {
+    return controller.createDeliveryConfirmation(req, res);
+  });
+
   return app;
 };

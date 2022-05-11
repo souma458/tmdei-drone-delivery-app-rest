@@ -1,5 +1,8 @@
+import { BadRequestException } from "../exceptions/badRequestException.js";
+import { ConflictException } from "../exceptions/conflictException.js";
+import { ConfirmationRepository } from "../repository/confirmationRepository.js";
 import { DeliveryResponseDTO } from "../model/response/deliveryResponseDTO.js";
-import { DeliveryRepository } from "../repository/repository.js";
+import { DeliveryRepository } from "../repository/deliveryRepository.js";
 import { DeliveryStatus } from "../model/enums/deliveryStatus.js";
 import { DeliveryNotFoundException } from "../exceptions/deliveryNotFound.js";
 import { InvalidStatusChangeException } from "../exceptions/invalidStatusChange.js";
@@ -7,6 +10,7 @@ import { InvalidStatusChangeException } from "../exceptions/invalidStatusChange.
 export class DeliveryService {
   constructor() {
     this.repository = new DeliveryRepository();
+    this.confirmationRepository = new ConfirmationRepository();
   }
 
   async get(deliveryId) {
@@ -66,6 +70,35 @@ export class DeliveryService {
 
     return await this.repository.update(delivery, {
       status: DeliveryStatus.DELIVERY_STATUS_CANCELED,
+    });
+  }
+
+  async createDeliveryConfirmation(confirmationInfo) {
+    if (
+      !confirmationInfo.delivery ||
+      (!confirmationInfo.signature && !confirmationInfo.fingerPrint)
+    ) {
+      throw new BadRequestException(
+        "The request is invalid. Confirm that both delivery and signature/fingerprint are defined."
+      );
+    }
+    const dbDelivery = await this.repository.findById(
+      confirmationInfo.delivery
+    );
+    if (!dbDelivery) {
+      throw new DeliveryNotFoundException(delivery);
+    }
+    if (dbDelivery.status != DeliveryStatus.DELIVERY_STATUS_COMPLETED) {
+      throw new ConflictException(
+        "Confirmation can only be done for completed deliveries"
+      );
+    }
+    return await this.confirmationRepository.save({
+      delivery: dbDelivery._id,
+      signature: confirmationInfo.delivery ? confirmationInfo.delivery : null,
+      fingerPrint: confirmationInfo.fingerPrint
+        ? confirmationInfo.fingerPrint
+        : null,
     });
   }
 }
