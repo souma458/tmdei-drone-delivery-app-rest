@@ -6,11 +6,13 @@ import { DeliveryRepository } from "../repository/deliveryRepository.js";
 import { DeliveryStatus } from "../model/enums/deliveryStatus.js";
 import { DeliveryNotFoundException } from "../exceptions/deliveryNotFound.js";
 import { InvalidStatusChangeException } from "../exceptions/invalidStatusChange.js";
+import { NotificationRepository } from "../repository/notificationRepository.js";
 
 export class DeliveryService {
   constructor() {
     this.deliveryRepository = new DeliveryRepository();
     this.confirmationRepository = new ConfirmationRepository();
+    this.notificationRepository = new NotificationRepository();
   }
 
   async get(deliveryId) {
@@ -58,6 +60,14 @@ export class DeliveryService {
   }
 
   async completeDelivery(delivery) {
+    const dbDelivery = await this.deliveryRepository.findById(delivery);
+    if (!dbDelivery) {
+      throw new DeliveryNotFoundException(delivery);
+    }
+    await this.notificationRepository.save({
+      delivery: delivery,
+      message: `Delivery with id = ${delivery} has been completed`,
+    });
     return await this.deliveryRepository.update(delivery, {
       status: DeliveryStatus.DELIVERY_STATUS_COMPLETED,
     });
