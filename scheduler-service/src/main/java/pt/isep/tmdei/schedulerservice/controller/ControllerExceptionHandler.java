@@ -10,6 +10,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.context.request.WebRequest;
 
 import pt.isep.tmdei.schedulerservice.model.response.ErrorMessage;
+import pt.isep.tmdei.schedulerservice.service.exception.EtaNotObtainableException;
 import pt.isep.tmdei.schedulerservice.service.exception.InvalidAccountException;
 
 @ControllerAdvice
@@ -27,7 +28,7 @@ public class ControllerExceptionHandler {
         return new ResponseEntity<ErrorMessage>(message, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(value = { HttpClientErrorException.Conflict.class })
+    @ExceptionHandler(value = { HttpClientErrorException.Conflict.class, EtaNotObtainableException.class })
     public ResponseEntity<ErrorMessage> conflictException(RuntimeException ex, WebRequest request) {
         ErrorMessage message = new ErrorMessage(HttpStatus.CONFLICT.value(), new Date(), ex.getMessage());
         return new ResponseEntity<ErrorMessage>(message, HttpStatus.CONFLICT);

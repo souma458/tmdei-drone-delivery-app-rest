@@ -7,9 +7,12 @@ import pt.isep.tmdei.schedulerservice.client.DeliveryServiceClient;
 import pt.isep.tmdei.schedulerservice.client.DroneServiceClient;
 import pt.isep.tmdei.schedulerservice.client.PackageServiceClient;
 import pt.isep.tmdei.schedulerservice.client.UserServiceClient;
+import pt.isep.tmdei.schedulerservice.model.data.DeliveryStatus;
 import pt.isep.tmdei.schedulerservice.model.request.ScheduleDeliveryRequestDTO;
+import pt.isep.tmdei.schedulerservice.model.response.GetEtaForDeliveryResponseDTO;
 import pt.isep.tmdei.schedulerservice.model.response.PickupPackageResponseDTO;
 import pt.isep.tmdei.schedulerservice.model.response.ScheduleDeliveryResponseDTO;
+import pt.isep.tmdei.schedulerservice.service.exception.EtaNotObtainableException;
 
 @Service
 @RequiredArgsConstructor
@@ -56,6 +59,19 @@ public class SchedulerService {
         deliveryServiceClient.cancelDelivery(delivery);
         var getDeliveryResponse = deliveryServiceClient.getDelivery(delivery).getBody();
         droneServiceClient.idleDrone(getDeliveryResponse.getDrone());
+    }
+
+    public GetEtaForDeliveryResponseDTO getEtaForDelivery(String delivery) {
+        var getDeliveryResponse = deliveryServiceClient.getDelivery(delivery).getBody();
+        if (getDeliveryResponse.getStatus().equals(DeliveryStatus.CANCELED.name())) {
+            throw new EtaNotObtainableException("Impossible to get an ETA since the delivery has been canceled");
+        }
+        if (getDeliveryResponse.getStatus().equals(DeliveryStatus.COMPLETED.name())) {
+            throw new EtaNotObtainableException("Impossible to get an ETA since the delivery is already completed");
+        }
+        var response = new GetEtaForDeliveryResponseDTO();
+        response.setMinutes(transportationService.calculateEta(getDeliveryResponse));
+        return response;
     }
 
 }
