@@ -109,7 +109,7 @@ export class DeliveryService {
     }
     return await this.confirmationRepository.save({
       delivery: dbDelivery._id,
-      signature: confirmationInfo.delivery ? confirmationInfo.delivery : null,
+      signature: confirmationInfo.signature ? confirmationInfo.signature : null,
       fingerPrint: confirmationInfo.fingerPrint
         ? confirmationInfo.fingerPrint
         : null,
