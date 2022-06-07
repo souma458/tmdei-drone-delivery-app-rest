@@ -103,9 +103,7 @@ export class DeliveryService {
       throw new DeliveryNotFoundException(delivery);
     }
     if (dbDelivery.status != DeliveryStatus.DELIVERY_STATUS_COMPLETED) {
-      throw new ConflictException(
-        "Confirmation can only be done for completed deliveries"
-      );
+      // TODO: handle confirmation before completion
     }
     return await this.confirmationRepository.save({
       delivery: dbDelivery._id,
