@@ -22,24 +22,24 @@ public class SchedulerController {
 
     private final SchedulerService service;
 
-    @PostMapping("/schedule-delivery")
+    @PostMapping("/delivery")
     public ResponseEntity<ScheduleDeliveryResponseDTO> scheduleDelivery(
             @RequestBody ScheduleDeliveryRequestDTO request) {
         return new ResponseEntity<>(service.scheduleDelivery(request), HttpStatus.CREATED);
     }
 
-    @PutMapping("/pickup-delivery/{drone}")
+    @PutMapping("/delivery/{drone}/pickup")
     public ResponseEntity<PickupPackageResponseDTO> pickupPackage(@PathVariable(value = "drone") String drone) {
         return new ResponseEntity<>(service.pickupPackage(drone), HttpStatus.OK);
     }
 
-    @PutMapping("/complete-delivery/{delivery}")
+    @PutMapping("/delivery/{delivery}/complete")
     public ResponseEntity<Void> completeDelivery(@PathVariable(value = "delivery") String delivery) {
         service.completeDelivery(delivery);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping("/cancel-delivery/{delivery}")
+    @PutMapping("/delivery/{delivery}/cancel")
     public ResponseEntity<Void> cancelDelivery(@PathVariable(value = "delivery") String delivery) {
         service.cancelDelivery(delivery);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
