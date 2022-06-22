@@ -29,7 +29,7 @@ public class DroneService {
 
         var response = new BookDroneResponseDTO();
         response.setDroneId(drones.get(0).getId());
-        response.setModel(model.getId());
+        response.setModel(model.getName());
 
         return response;
     }
